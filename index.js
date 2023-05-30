@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const Database = require("@replit/database")
 const db = new Database()
-const { MessageActionRow, MessageSelectMenu } = require('discord.js');
 
 app.listen(3000, () => {
   console.log ("its working bro")
@@ -14,8 +13,8 @@ app.get("/", (req, res) => {
 
 const Discord = require("discord.js");
 const client = new Discord.Client ({
-  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"],
-  allowedMentions: ["users"]
+  intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_MESSAGE_REACTIONS"],
+  allowedMentions: ["users", "channels"]
 });
 
 const canvacord = require("canvacord")
@@ -99,7 +98,7 @@ client.on("guildMemberRemove", async member => {
   leaverChannel.send({content: member.user.toString(), files: [attachment]});
 })
 const fs = require("fs");
-const prefix = "?"
+const prefix = "a!"
 client.commands = new Discord.Collection();
 const commands = fs.readdirSync("./Commands").filter(file => file.endsWith(".js"))
 for (file of commands) {
@@ -119,114 +118,115 @@ if (message.content.startsWith(prefix)) {
 })
 
 client.on("message", message => {
-  if(message.content === "?nameme") {
+  if(message.content === "a!nameme") {
     let nicknames = ["Goofy", "Smart", "Cool", "Dumb", "Gay", "Stoopid", "Awesome"]
     message.reply(`${nicknames[Math.floor(Math.random () * nicknames.length)]} is your new name!`)
   }
-  if(message.content === "?helpme") {
+  if(message.content === "a!help") {
     let embed = new Discord.MessageEmbed()
     .setTitle("Need Help?")
     .setDescription("https://discord.gg/UwRb96dxFU")
     .setColor("RANDOM")
-    .addField("Prefix", "?")
-    .addField("?bored", "For commands")
+    .addField("Prefix", "a!")
+    .addField("a!bored", "For commands")
     .setFooter("< You", message.author.displayAvatarURL())
     .setTimestamp()
     message.reply({embeds: [embed]})
   }
-  if(message.content === "?amistupid") {
+  if(message.content === "a!amistupid") {
     let nicknames = ["Yes, you", "No you are not", "A little bit", "You are sometimes", "I spelled stoopid wrong, I think I am"]
     message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content.toLowerCase().startsWith("?bored") || message.content.toLowerCase().startsWith("?Bored") || message.content.toLowerCase().startsWith("?BORED")) {
+  if(message.content.toLowerCase().startsWith("a!bored") || message.content.toLowerCase().startsWith("a!Bored") || message.content.toLowerCase().startsWith("a!BORED")) {
     let bored = new Discord.MessageEmbed()
     .setTitle("Join the support server if there are any issues!")
     .setAuthor("Atleantean Bot Commands", "https://i.postimg.cc/V6MnBXnk/Screenshot-2023-05-03-9-41-29-PM.png")
-    .setDescription("Prefix = ?")
+    .setDescription("Prefix = a!")
     .setColor("PURPLE")
-    .addField("<:atlanteanpaper:1111102024369590313>|─OTHER─|<:atlanteanpaper:1111102024369590313>", "*`?duplicatechannel`*, *`?renamechannel`*")
-    .addField("<:atlanteancool:1111102369288167434>|─FUN─|<:atlanteancool:1111102369288167434>", "*`?nameme`*, *`?say`*, *`?amistupid`*, *`?amigay`*, *`?amihappy`*, *`?kiss`*, *`?slap`*, *`?8ball`*, *`?avatar`*, *`?dumbestcommandever`*, *`?rockpaperscissors/?rps`*, *`?hug`*, *`?flipacoin`*")
-    .addField("<:atlanteansmile:1111031085976014858>|─EMOJIS─|<:atlanteansmile:1111031085976014858>", "*`?peopleemojis`*, *`?nature-animalemojis`*, *`?activity-sportsemojis`*, *`?vehicle-travelemojis`*, *`?objectemojis`*, *`?symbolemojis`*, *`?flagemojis`*")
-      .addField("<:atlanteansword:1111028471410479176>|─ROLEPLAY─|<:atlanteansword:1111028471410479176>", "*`?buyak47`*, *`?buyglock19`*, *`?shootwithglock19`*, *`?shootwithak47`*, *`?bal`*, *`?dep`*, *`?withdraw`*, *`?dailyprize`*, *`?buyknife`*, *`?stabwithknife`*, *`?buysword`*, *`?stabwithsword`*, *`?slicewithsword`*, *`?buylambo`*")
-      .addField("<:atlanteanmemeface:1111028079800897739>|─MEMES─|<:atlanteanmemeface:1111028079800897739>", "*`?randomeme`*, *`?twittermeme`*, *`?gifmeme`*, *`?dirtymeme`*, *`?darkmeme`*, *`?wholesomememe`*")
-     .addField("<:atlanteansheild:1111027600253530162>|─MODERATION─|<:atlanteansheild:1111027600253530162>", "*`?purge`*, *`?kick`*, *`?ban`*, *`?unban`*, *`?mute`*, *`?unmute`*, *`?snipe`*, *`?warn`*")
-      .addField("<:atlanteanutlity:1111025986448916481>|─UTILITY─|<:atlanteanutlity:1111025986448916481>", "*`?serverinfo`*, *`?helpme`*, *`?ping`*, *`?support`*, *`?inviteme`*, *`?botinfo`*, *`?suggest`*, *`?policy`*")
+    .addField("<:atlanteanpaper:1111102024369590313>|─OTHER─|<:atlanteanpaper:1111102024369590313>", "*`a!duplicatechannel`*, *`a!renamechannel`*")
+    .addField("<:atlanteancool:1111102369288167434>|─FUN─|<:atlanteancool:1111102369288167434>", "*`a!nameme`*, *`a!say`*, *`a!amistupid`*, *`a!amigay`*, *`a!amihappy`*, *`a!kiss`*, *`a!slap`*, *`a!8ball`*, *`a!avatar`*, *`a!dumbestcommandever`*, *`a!rockpaperscissors/a!rps`*, *`a!hug`*, *`a!flipacoin`*")
+    .addField("<:atlanteansmile:1111031085976014858>|─EMOJIS─|<:atlanteansmile:1111031085976014858>", "*`a!peopleemojis`*, *`a!nature-animalemojis`*, *`a!activity-sportsemojis`*, *`a!vehicle-travelemojis`*, *`a!objectemojis`*, *`a!symbolemojis`*, *`a!flagemojis`*")
+      .addField("<:atlanteansword:1111028471410479176>|─ROLEPLAY─|<:atlanteansword:1111028471410479176>", "*`a!buyak47`*, *`a!buyglock19`*, *`a!shootwithglock19`*, *`a!shootwithak47`*, *`a!bal`*, *`a!dep`*, *`a!withdraw`*, *`a!dailyprize`*, *`a!buyknife`*, *`a!stabwithknife`*, *`a!buysword`*, *`a!stabwithsword`*, *`a!slicewithsword`*, *`a!buylambo`*")
+      .addField("<:atlanteanmemeface:1111028079800897739>|─MEMES─|<:atlanteanmemeface:1111028079800897739>", "*`a!randomeme`*, *`a!twittermeme`*, *`a!gifmeme`*, *`a!dirtymeme`*, *`a!darkmeme`*, *`a!wholesomememe`*")
+     .addField("<:atlanteansheild:1111027600253530162>|─MODERATION─|<:atlanteansheild:1111027600253530162>", "*`a!purge`*, *`a!kick`*, *`a!ban`*, *`a!unban`*, *`a!mute`*, *`a!unmute`*, *`a!snipe`*, *`a!warn`*, *`a!showwarns`*, *`a!clearwarns`*")
+      .addField("<:atlanteanutlity:1111025986448916481>|─UTILITY─|<:atlanteanutlity:1111025986448916481>", "*`a!serverinfo`*, *`a!help`*, *`a!ping`*, *`a!support`*, *`a!inviteme`*, *`a!botinfo`*, *`a!suggest`*, *`a!policy`*, *`a!setupverification`*")
+      .addField("To have atlantean make a reaction role verification your message must include `To gain access to our channels you must verify by clicking the check mark below.`", "Make sure to `a!setupverification` first!")
       .addField(`Atlantean is currently in ${client.guilds.cache.size.toLocaleString()} Servers!`, " ")
     .setTimestamp()
     message.reply({embeds: [bored]})
   }
-  if(message.content === "?support") {
+  if(message.content === "a!support") {
     let embed = new Discord.MessageEmbed()
     .setTitle("Support server invite link!")
     .setDescription("https://discord.gg/UwRb96dxFU")
     .setColor("PURPLE")
     message.reply({embeds: [embed]})
   }
-  if(message.content === "?amigay") {
-    let replies = ["Yes, You are gay.", "No, You are not.", "Which gay? If you mean happy do ?amihappy."]
+  if(message.content === "a!amigay") {
+    let replies = ["Yes, You are gay.", "No, You are not.", "Which gay? If you mean happy do a!amihappy."]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content === "?amihappy") {
+  if(message.content === "a!amihappy") {
     let replies = ["You are kind of happy.", "You are depressed.", "Wow! You are extremely happy!"]
 message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content === "?peopleemojis") {
+  if(message.content === "a!peopleemojis") {
     let embed = new Discord.MessageEmbed()
     .setTitle("People Emojis")
     .setDescription("😀 😃 😄 😁 😆 🤩 😅 😂 🤣 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 🤪 😜 😝 😛 🤑 🤗 🤓 😎 🤡 🤠 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 😤 😠 😡 🤬 😶 😐 😑 😯 😦 😧 😮 😲 😵 🤯 😳 😱 😨 😰 😢 😥 🤤 😭 😓 😪 😴 🥱 🙄 🤨 🧐 🤔 🤫 🤭 🤥 😬 🤐 🤢 🤮 🤧 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 🤲 🤝 👍 👎 👊 ✊ 🤛 🤜 🤞 ✌️ 🤘 🤏 👌 👈 👉 👆 👇 ☝️ ✋ 🤚 🖐 🖖 👋 🤙 💪 🖕 🤟 ✍️ 🤳 💅 🖖 💄 💋 👄 👅 👂 🦻 👃 🦵 🦶 🦾 🦿 👣 👁 👀 🗣 👤 👥 👶 👦 👧 🧒 👨 👩 🧑 👱‍♀️ 👱 🧔 👴 👵 🧓 👲 👳‍♀️ 👳 🧕 👮‍♀️ 👮 👷‍♀️ 👷 💂‍♀️ 💂 🕵️‍♀️ 🕵️ 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨‍🎤 👩‍🏫 👨‍🏫 👩‍🏭 👨‍🏭 👩‍💻 👨‍💻 👩‍💼 👨‍💼 👩‍🔧 👨‍🔧 👩‍🔬 👨‍🔬 👩‍🎨 👨‍🎨 👩‍🚒 👨‍🚒 👩‍✈️ 👨‍✈️ 👩‍🚀 👨‍🚀 👩‍⚖️ 👨‍⚖️ 🤶 🎅 👸 🤴 👰 🤵 👼 🤰 🤱 🙇‍♀️ 🙇 💁 💁‍♂️ 🙅 🙅‍♂️ 🙆 🙆‍♂️ 🙋 🙋‍♂️ 🤦‍♀️ 🤦‍♂️ 🤷‍♀️ 🤷‍♂️ 🙎 🙎‍♂️ 🙍 🙍‍♂️ 💇 💇‍♂️ 💆 💆‍♂️ 🧖‍♀️ 🧖‍♂️ 🧏 🧏‍♂️ 🧏‍♀️ 🧙‍♀️ 🧙‍♂️ 🧛‍♀️ 🧛‍♂️ 🧟‍♀️ 🧟‍♂️ 🧚‍♀️ 🧚‍♂️ 🧜‍♀️ 🧜‍♂️ 🧝‍♀️ 🧝‍♂️ 🧞‍♀️ 🧞‍♂️ 🕴 💃 🕺 👯 👯‍♂️ 🚶‍♀️ 🚶 🏃‍♀️ 🏃 🧍 🧍‍♂️ 🧍‍♀️ 🧎 🧎‍♂️ 🧎‍♀️ 👨‍🦯 👩‍🦯 👨‍🦼 👩‍🦼 👨‍🦽 👩‍🦽 🧑‍🤝‍🧑 👫 👭 👬 💑 👩‍❤️‍👩 👨‍❤️‍👨 💏 👩‍❤️‍💋‍👩 👨‍❤️‍💋‍👨 👪 👨‍👩‍👧 👨‍👩‍👧‍👦 👨‍👩‍👦‍👦 👨‍👩‍👧‍👧 👩‍👩‍👦 👩‍👩‍👧 👩‍👩‍👧‍👦 👩‍👩‍👦‍👦 👩‍👩‍👧‍👧 👨‍👨‍👦 👨‍👨‍👧 👨‍👨‍👧‍👦 👨‍👨‍👦‍👦 👨‍👨‍👧‍👧 👩‍👦 👩‍👧 👩‍👧‍👦 👩‍👦‍👦 👩‍👧‍👧 👨‍👦 👨‍👧 👨‍👧‍👦 👨‍👦‍👦 👨‍👧‍👧 👚 👕 👖 👔 👗 👙 👘 👠 👡 👢 👞 👟 👒 🎩 🎓 👑 ⛑ 🎒 👝 👛 👜 💼 👓 🕶 🤿 🌂 ☂️ 🧣 🧤 🧥 🦺 🥻 🩱 🩲 🩳 🩰 🧦 🧢 ⛷ 🏂 🏋️‍♀️ 🏋️ 🤺 🤼‍♀️ 🤼‍♂️ 🤸‍♀️ 🤸‍♂️ ⛹️‍♀️ ⛹️ 🤾‍♀️ 🤾‍♂️ 🏌️‍♀️ 🏌️ 🏄‍♀️ 🏄 🏊‍♀️ 🏊 🤽‍♀️ 🤽‍♂️ 🚣‍♀️ 🚣 🏇 🚴‍♀️ 🚴 🚵‍♀️ 🚵 🤹‍♀️ 🤹‍♂️ 🧗‍♀️ 🧗‍♂️ 🧘‍♀️ 🧘‍♂️ 🥰 🥵 🥶 🥳 🥴 🥺 🦸 🦹 🧑‍🦰 🧑‍🦱 🧑‍🦳 🧑‍🦲 🧑‍⚕️ 🧑‍🎓 🧑‍🏫 🧑‍⚖️ 🧑‍🌾 🧑‍🍳 🧑‍🔧 🧑‍🏭 🧑‍💼 🧑‍🔬 🧑‍💻 🧑‍🎤 🧑‍🎨 🧑‍✈️ 🧑‍🚀 🧑‍🚒 🧑‍🦯 🧑‍🦼 🧑‍🦽 🦰 🦱 🦲 🦳")
   .setColor("YELLOW")
   message.reply({embeds: [embed]})
   }
-  if(message.content === "?nature-animalemojis") {
+  if(message.content === "a!nature-animalemojis") {
     let embed = new Discord.MessageEmbed()
     .setTitle("Nature/Animals Emojis")
     .setDescription("🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐽 🐸 🐵 🙊 🙉 🙊 🐒 🐔 🐧 🐦 🐤 🐣 🐥 🦆 🦩 🦅 🦉 🦇 🐺 🐗 🐴 🦄 🐝 🐛 🦋 🐌 🐚 🦗 🐞 🐜 🕷 🕸 🐢 🐍 🦎 🦂 🦀 🦑 🐙 🦐 🐠 🐟 🐡 🐬 🦈 🐳 🐋 🐊 🐆 🐅 🐃 🐂 🐄 🦌 🐪 🐫 🐘 🦏 🦍 🐎 🐖 🐐 🐏 🐑 🐕 🐩 🦮 🐕‍🦺 🐈 🐓 🦃 🕊 🐇 🐁 🐀 🐿 🦓 🦒 🦔 🦧 🦥 🦦 🦨 🦕 🦖 🦪 🐾 🐉 🐲 🌵 🎄 🌲 🌳 🌴 🌱 🌿 ☘️ 🍀 🎍 🎋 🍃 🍂 🍁 🍄 🌾 💐 🌷 🌹 🥀 🌻 🌼 🌸 🌺 🌎 🌍 🌏 🌕 🌖 🌗 🌘 🌑 🌒 🌓 🌔 🌚 🌝 🌞 🌛 🌜 🌙 🪐 💫 ⭐️ 🌟 ✨ ⚡️ 🔥 💥 ☄️ ☀️ 🌤 ⛅️ 🌥 🌦 🌈 ☁️ 🌧 ⛈ 🌩 🌨 ☃️ ⛄️ ❄️ 🌬 💨 🌪 🌫 🌊 💧 💦 ☔️")
    .setColor("GREEN")
     message.reply({embeds: [embed]})
   }
-  if(message.content === "?activity-sportsemojis") {
+  if(message.content === "a!activity-sportsemojis") {
     let embed = new Discord.MessageEmbed()
     .setTitle("Activity/Sports Emojis")
     .setDescription("⚽️ 🏀 🏈 ⚾️ 🎾 🏐 🏉 🎱 🏓 🏸 🥅 🏒 🏑 🏏 ⛳️ 🏹 🎣 🥊 🥋 ⛸ 🎿 ⛷ 🏂 🏋️‍♀️ 🏋️ 🤺 🤼‍♀️ 🤼‍♂️ 🤸‍♀️ 🤸‍♂️ ⛹️‍♀️ ⛹️ 🤾‍♀️ 🤾‍♂️ 🏌️‍♀️ 🏌️ 🏄‍♀️ 🏄 🏊‍♀️ 🏊 🤽‍♀️ 🤽‍♂️ 🚣‍♀️ 🚣 🏇 🚴‍♀️ 🚴 🚵‍♀️ 🚵 🪂 🎽 🏅 🎖 🥇 🥈 🥉 🏆 🏵 🎗 🎫 🎟 🎪 🤹‍♀️ 🤹‍♂️ 🎭 🎨 🎬 🎤 🎧 🎼 🎹 🥁 🎷 🎺 🎸 🎻 🪕 🎲 🎯 🎳 🎮 🎰 🛷 🥌 🪀 🪁")
     .setColor("ORANGE")
     message.reply({embeds: [embed]})
   }
-    if(message.content === "?vehicle-travelemojis") {
+    if(message.content === "a!vehicle-travelemojis") {
       let embed = new Discord.MessageEmbed()
       .setTitle("Vehicle/Travel Emojis")
       .setDescription("🚗 🚕 🚙 🚌 🚎 🏎 🚓 🚑 🚒 🚐 🚚 🚛 🚜 🛴 🚲 🛵 🛺 🏍 🦽 🦼 🚨 🚔 🚍 🚘 🚖 🚡 🚠 🚟 🚃 🚋 🚞 🚝 🚄 🚅 🚈 🚂 🚆 🚇 🚊 🚉 🚁 🛩 ✈️ 🛫 🛬 🚀 🛰 💺 🛶 ⛵️ 🛥 🚤 🛳 ⛴ 🚢 ⚓️ 🚧 ⛽️ 🚏 🚦 🚥 🗺 🗿 🗽 ⛲️ 🗼 🏰 🏯 🏟 🎡 🎢 🎠 ⛱ 🏖 🏝 ⛰ 🏔 🗻 🌋 🏜 🏕 ⛺️ 🛤 🛣 🏗 🏭 🏠 🏡 🏘 🏚 🏢 🏬 🏣 🏤 🏥 🏦 🏨 🏪 🏫 🏩 💒 🏛 ⛪️ 🕌 🕍 🕋 🛕 ⛩ 🗾 🎑 🏞 🌅 🌄 🌠 🎇 🎆 🌇 🌆 🏙 🌃 🌌 🌉 🌁 🛸 ")
       .setColor("BLUE")
       message.reply({embeds: [embed]})
     }
-     if(message.content === "?objectemojis") {
+     if(message.content === "a!objectemojis") {
        let embed = new Discord.MessageEmbed()
        .setTitle("Object Emojis")
        .setDescription("⌚️ 📱 📲 💻 ⌨️ 🖥 🖨 🖱 🖲 🕹 🗜 💽 💾 💿 📀 📼 📷 📸 📹 🎥 📽 🎞 📞 ☎️ 📟 📠 📺 📻 🎙 🎚 🎛 ⏱ ⏲ ⏰ 🕰 ⌛️ ⏳ 📡 🔋 🔌 💡 🔦 🕯 🗑 🛢 💸 💵 💴 💶 💷 💰 💳 💎 ⚖️ 🔧 🔨 ⚒ 🛠 ⛏ 🔩 ⚙️ ⛓ 🔫 💣 🔪 🗡 ⚔️ 🪓 🦯 🛡 🚬 ⚰️ ⚱️ 🏺 🔮 📿 💈 ⚗️ 🔭 🔬 🕳 💊 💉 🩸 🩹 🩺 🌡 🪒 🚽 🚰 🚿 🛁 🛀 🛎 🔑 🗝 🚪 🪑 🛋 🛏 🛌 🖼 🛍 🛒 🎁 🎈 🎏 🎀 🎊 🎉 🎎 🏮 🎐 ✉️ 📩 📨 📧 💌 📥 📤 📦 🏷 📪 📫 📬 📭 📮 📯 📜 📃 📄 📑 📊 📈 📉 🗒 🗓 📆 📅 📇 🗃 🗳 🗄 📋 📁 📂 🗂 🗞 📰 📓 📔 📒 📕 📗 📘 📙 📚 📖 🔖 🔗 📎 🖇 📐 📏 📌 📍 📌 🎌 🏳️ 🏴 🏁 🪔 ✂️ 🖊 🖋 ✒️ 🖌 🖍 📝 ✏️ 🔍 🔎 🔏 🔐 🔒 🔓")
        .setColor("BLACK")
        message.reply({embeds: [embed]})
      } 
-      if(message.content === "?symbolemojis") {
+      if(message.content === "a!symbolemojis") {
         let embed = new Discord.MessageEmbed()
         .setTitle("Symbol Emojis")
-        .setDescription("❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💕 💞 💓 💗 💖 💘 💝 💟 ☮️ ✝️ ☪️ 🕉 ☸️ ✡️ 🔯 🕎 ☯️ ☦️ 🛐 ⛎ ♈️ ♉️ ♊️ ♋️ ♌️ ♍️ ♎️ ♏️ ♐️ ♑️ ♒️ ♓️ 🆔 ⚛️ 🉑 ☢️ ☣️ 📴 📳 🈶 🈚️ 🈸 🈺 🈷️ ✴️ 🆚 💮 🉐 ㊙️ ㊗️ 🈴 🈵 🈹 🈲 🅰️ 🅱️ 🆎 🆑 🅾️ 🆘 ❌ ⭕️ 🛑 ⛔️ 📛 🚫 💯 💢 ♨️ 🚷 🚯 🚳 🚱 🔞 📵 🚭 ❗️ ❕ ❓ ❔ ‼️ ⁉️ 🔅 🔆 〽️ ⚠️ 🚸 🔱 ⚜️ 🔰 ♻️ ✅ 🈯️ 💹 ❇️ ✳️ ❎ 🌐 💠 Ⓜ️ 🌀 💤 🏧 🚾 ♿️ 🅿️ 🈳 🈂️ 🛂 🛃 🛄 🛅 🚹 🚺 🚼 🚻 🚮 🎦 📶 🈁 🔣 ℹ️ 🔤 🔡 🔠 🆖 🆗 🆙 🆒 🆕 🆓 0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟 🔢 #️⃣ *️⃣ ▶️ ⏸ ⏯ ⏹ ⏺ ⏭ ⏮ ⏩ ⏪ ⏫ ⏬ ◀️ 🔼 🔽 ➡️ ⬅️ ⬆️ ⬇️ ↗️ ↘️ ↙️ ↖️ ↕️ ↔️ ↪️ ↩️ ⤴️ ⤵️ 🔀 🔁 🔂 🔄 🔃 🎵 🎶 ➕ ➖ ➗ ✖️ 💲 💱 ™️ ©️ ®️ 〰️ ➰ ➿ 🔚 🔙 🔛 🔝 ✔️ ☑️ 🔘 🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤 🔺 🔻 🔸 🔹 🔶 🔷 🔳 🔲 ▪️ ▫️ ◾️ ◽️ ◼️ ◻️ ⬛️ ⬜️ 🟥 🟧 🟨 🟩 🟦 🟪 🟫 🔈 🔇 🔉 🔊 🔔 🔕 📣 📢 👁‍🗨 💬 💭 🗯 ♠️ ♣️ ♥️ ♦️ 🃏 🎴 🀄️ 🕐 🕑 🕒 🕓 🕔 🕕 🕖 🕗 🕘 🕙 🕚 🕛 🕜 🕝 🕞 🕟 🕠 🕡 🕢 🕣 🕤 🕥 🕦 🕧 ⏏ ♀ ♂ ⚕ ♾️ ")
+        .setDescription("❤️ 🧡 💛 💚 💙 💜 🖤 🤍 🤎 💔 ❣️ 💕 💞 💓 💗 💖 💘 💝 💟 ☮️ ✝️ ☪️ 🕉 ☸️ ✡️ 🔯 🕎 ☯️ ☦️ 🛐 ⛎ ♈️ ♉️ ♊️ ♋️ ♌️ ♍️ ♎️ ♏️ ♐️ ♑️ ♒️ ♓️ 🆔 ⚛️ 🉑 ☢️ ☣️ 📴 📳 🈶 🈚️ 🈸 🈺 🈷️ ✴️ 🆚 💮 🉐 ㊙️ ㊗️ 🈴 🈵 🈹 🈲 🅰️ 🅱️ 🆎 🆑 🅾️ 🆘 ❌ ⭕️ 🛑 ⛔️ 📛 🚫 💯 💢 ♨️ 🚷 🚯 🚳 🚱 🔞 📵 🚭 ❗️ ❕ ❓ ❔ ‼️ !?️ 🔅 🔆 〽️ ⚠️ 🚸 🔱 ⚜️ 🔰 ♻️ ✅ 🈯️ 💹 ❇️ ✳️ ❎ 🌐 💠 Ⓜ️ 🌀 💤 🏧 🚾 ♿️ 🅿️ 🈳 🈂️ 🛂 🛃 🛄 🛅 🚹 🚺 🚼 🚻 🚮 🎦 📶 🈁 🔣 ℹ️ 🔤 🔡 🔠 🆖 🆗 🆙 🆒 🆕 🆓 0️⃣ 1️⃣ 2️⃣ 3️⃣ 4️⃣ 5️⃣ 6️⃣ 7️⃣ 8️⃣ 9️⃣ 🔟 🔢 #️⃣ *️⃣ ▶️ ⏸ ⏯ ⏹ ⏺ ⏭ ⏮ ⏩ ⏪ ⏫ ⏬ ◀️ 🔼 🔽 ➡️ ⬅️ ⬆️ ⬇️ ↗️ ↘️ ↙️ ↖️ ↕️ ↔️ ↪️ ↩️ ⤴️ ⤵️ 🔀 🔁 🔂 🔄 🔃 🎵 🎶 ➕ ➖ ➗ ✖️ 💲 💱 ™️ ©️ ®️ 〰️ ➰ ➿ 🔚 🔙 🔛 🔝 ✔️ ☑️ 🔘 🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤 🔺 🔻 🔸 🔹 🔶 🔷 🔳 🔲 ▪️ ▫️ ◾️ ◽️ ◼️ ◻️ ⬛️ ⬜️ 🟥 🟧 🟨 🟩 🟦 🟪 🟫 🔈 🔇 🔉 🔊 🔔 🔕 📣 📢 👁‍🗨 💬 💭 🗯 ♠️ ♣️ ♥️ ♦️ 🃏 🎴 🀄️ 🕐 🕑 🕒 🕓 🕔 🕕 🕖 🕗 🕘 🕙 🕚 🕛 🕜 🕝 🕞 🕟 🕠 🕡 🕢 🕣 🕤 🕥 🕦 🕧 ⏏ ♀ ♂ ⚕ ♾️ ")
         .setColor("PURPLE")
         message.reply({embeds: [embed]})
       }
-       if(message.content === "?flagemojis") {
+       if(message.content === "a!flagemojis") {
          let embed = new Discord.MessageEmbed()
          .setTitle("Flag Emojis")
          .setDescription("🏴 🇦🇫 🇦🇽 🇦🇱 🇩🇿 🇦🇸 🇦🇩 🇦🇴 🇦🇮 🇦🇶 🇦🇬 🇦🇷 🇦🇲 🇦🇼 🇦🇨 🇦🇺 🇦🇹 🇦🇿 🇧🇸 🇧🇭 🇧🇩 🇧🇧 🇧🇾 🇧🇪 🇧🇿 🇧🇯 🇧🇲 🇧🇹 🇧🇴 🇧🇦 🇧🇼 🇧🇻 🇧🇷 🇮🇴 🇻🇬 🇧🇳 🇧🇬 🇧🇫 🇧🇮 🇰🇭 🇨🇲 🇨🇦 🇮🇨 🇨🇻 🇧🇶 🇰🇾 🇨🇫 🇪🇦 🇹🇩 🇨🇱 🇨🇳 🇨🇽 🇨🇵 🇨🇨 🇨🇴 🇰🇲 🇨🇬 🇨🇩 🇨🇰 🇨🇷 🇨🇮 🇭🇷 🇨🇺 🇨🇼 🇨🇾 🇨🇿 🇩🇰 🇩🇬 🇩🇯 🇩🇲 🇩🇴 🇪🇨 🇪🇬 🇸🇻 🇬🇶 🇪🇷 🇪🇪 🇪🇹 🇪🇺 🇫🇰 🇫🇴 🇫🇯 🇫🇮 🇫🇷 🇬🇫 🇵🇫 🇹🇫 🇬🇦 🇬🇲 🇬🇪 🇩🇪 🇬🇭 🇬🇮 🇬🇷 🇬🇱 🇬🇩 🇬🇵 🇬🇺 🇬🇹 🇬🇬 🇬🇳 🇬🇼 🇬🇾 🇭🇹 🇭🇲 🇭🇳 🇭🇰 🇭🇺 🇮🇸 🇮🇳 🇮🇩 🇮🇷 🇮🇶 🇮🇪 🇮🇲 🇮🇱 🇮🇹 🇯🇲 🇯🇵 🇯🇪 🇯🇴 🇰🇿 🇰🇪 🇰🇮 🇽🇰 🇰🇼 🇰🇬 🇱🇦 🇱🇻 🇱🇧 🇱🇸 🇱🇷 🇱🇾 🇱🇮 🇱🇹 🇱🇺 🇲🇴 🇲🇰 🇲🇬 🇲🇼 🇲🇾 🇲🇻 🇲🇱 🇲🇹 🇲🇭 🇲🇶 🇲🇷 🇲🇺 🇾🇹 🇲🇽 🇫🇲 🇲🇩 🇲🇨 🇲🇳 🇲🇪 🇲🇸 🇲🇦 🇲🇿 🇲🇲 🇳🇦 🇳🇷 🇳🇵 🇳🇱 🇳🇨 🇳🇿 🇳🇮 🇳🇪 🇳🇬 🇳🇺 🇳🇫 🇲🇵 🇰🇵 🇳🇴 🇴🇲 🇵🇰 🇵🇼 🇵🇸 🇵🇦 🇵🇬 🇵🇾 🇵🇪 🇵🇭 🇵🇳 🇵🇱 🇵🇹 🇵🇷 🇶🇦 🇷🇪 🇷🇴 🇷🇺 🇷🇼 🇼🇸 🇸🇲 🇸🇹 🇸🇦 🇸🇳 🇷🇸 🇸🇨 🇸🇱 🇸🇬 🇸🇽 🇸🇰 🇸🇮 🇸🇧 🇸🇴 🇿🇦 🇬🇸 🇰🇷 🇸🇸 🇪🇸 🇱🇰 🇧🇱 🇸🇭 🇰🇳 🇱🇨 🇲🇫 🇵🇲 🇻🇨 🇸🇩 🇸🇷 🇸🇯 🇸🇿 🇸🇪 🇨🇭 🇸🇾 🇹🇼 🇹🇯 🇹🇿 🇹🇭 🇹🇱 🇹🇬 🇹🇰 🇹🇴 🇹🇹 🇹🇦 🇹🇳 🇹🇷 🇹🇲 🇹🇨 🇹🇻 🇺🇬 🇺🇦 🇦🇪 🇬🇧 🇺🇸 🇺🇾 🇺🇲 🇺🇳 🇻🇮 🇺🇿 🇻🇺 🇻🇦 🇻🇪 🇻🇳 🇼🇫 🇪🇭 🇾🇪 🇿🇲 🇿🇼 🏴󠁧󠁢󠁥󠁮󠁧󠁿 🏴󠁧󠁢󠁳󠁣󠁴󠁿 🏴󠁧󠁢󠁷󠁬󠁳󠁿 🏳️‍🌈 🏴‍☠️")
          .setColor("RED")
          message.reply({embeds: [embed]})
        }
-  if(message.content === "?inviteme") {
+  if(message.content === "a!inviteme") {
     let invite = new Discord.MessageEmbed()
     .setTitle("Atlantean Bot Invite Link")
     .setDescription("https://discord.com/api/oauth2/authorize?client_id=1103495842633089074&permissions=8&scope=bot")
     .setColor("PURPLE")
     message.reply({embeds: [invite]})
   }
-if (message.content === "?serverinfo") {
+if (message.content === "a!serverinfo") {
  let embed = new Discord.MessageEmbed()
  .setColor("RANDOM")
  .setTitle(`${message.guild.name}`)
@@ -241,14 +241,14 @@ if (message.content === "?serverinfo") {
  .setFooter(`GUILD ID: ${message.guild.id}`)
  message.reply({embeds: [embed]})
 }
-if(message.content === "?avatar") {
+if(message.content === "a!avatar") {
  let embed = new Discord.MessageEmbed()
 .setTitle(`${message.author.username}`)
 .setImage(`${message.author.displayAvatarURL({dynamic : true})}`)
 .setColor("RANDOM")
 message.reply({embeds: [embed]})
 }
-if (message.content.toLowerCase().startsWith("?8ball")) {
+if (message.content.toLowerCase().startsWith("a!8ball")) {
  let replies = ["Yes.", "No.", "Maybe.", "Not sure.", "Shut up you rat!", "Sure, why not?", "When you grow a braincell, yes.", "THAT'S A SOLID ****NO****"]
  let randomized = replies[Math.floor(Math.random() * replies.length)]
  let sentence = message.content.split(" ");
@@ -263,80 +263,80 @@ if (message.content.toLowerCase().startsWith("?8ball")) {
  .setFooter(" ")
  message.reply({embeds: [embed]})
 }
-  if(message.content.startsWith("?shootwithak47")) {
+  if(message.content.startsWith("a!shootwithak47")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Mention someone to shoot!")
     else{
       message.channel.send(`${victim} got shot with an AK47.`)
     }
   }
-  if(message.content.startsWith("?shootwithglock19")) {
+  if(message.content.startsWith("a!shootwithglock19")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Mention someone to shoot!")
     else{
       message.channel.send(`${victim} got shot with a Glock-19.`)
     }
   }
-  if(message.content.startsWith("?stabwithknife")) {
+  if(message.content.startsWith("a!stabwithknife")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Mention someone to stab!")
     else{
       message.channel.send(`${victim} was stabbed with a knife and survived from their injuries.`)
     }
   }
-  if(message.content.startsWith("?stabwithsword")) {
+  if(message.content.startsWith("a!stabwithsword")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Mention someone to stab!")
     else{
       message.channel.send(`${victim} got stabbed with a sword and it severly injured.`)
     }
   }
-if(message.content.startsWith("?slicewithsword")) {
+if(message.content.startsWith("a!slicewithsword")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Mention someone to slice in half!")
     else{
       message.channel.send(`${victim} got sliced in half!`)
     }
   }
-if(message.content.startsWith("?kiss")) {
+if(message.content.startsWith("a!kiss")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Choose your babe!")
     else{
       message.channel.send(`${victim} was smooched! 💋`)
     }
   }
-if(message.content.startsWith("?slap")) {
+if(message.content.startsWith("a!slap")) {
     let victim = message.mentions.users.first()
     if(!victim) message.reply("Mention someone to slap.")
     else{
       message.channel.send(`${victim} got slapped! 👋`)
     }
   }
- if(message.content === "?randomeme") {
+ if(message.content === "a!randomeme") {
     let replies = ["https://tenor.com/view/meme-dank-life-flirty-gif-5457123", "https://tenor.com/view/meme-i-am-wanted-dance-guys-look-its-the-funny-haha-laugh-gif-25418476", "https://tenor.com/view/memes-meme-random-captions-caption-gif-23557955", "https://i1.sndcdn.com/artworks-XwifFOr3yqt3VVhT-zyUWFw-t500x500.jpg", "https://forumstatic.oneplusmobile.com/opforum-gl/upload/image/front/thread/20220615/76076/1089195539092209666/1089195539092209666.jpg", "https://static.wikia.nocookie.net/4e906cff-de39-45f5-a156-395597600cd5"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content === "?twittermeme") {
+  if(message.content === "a!twittermeme") {
     let replies = ["https://i0.wp.com/hyperallergic-newspack.s3.amazonaws.com/uploads/2022/11/twitter1.png?resize=780%2C1139&quality=100&ssl=1", "https://ichef.bbci.co.uk/news/549/cpsprodpb/B89D/production/_96516274_a2d6dcf4-a671-4d3b-ab9f-48b98409ba1a.jpg", "https://resize.indiatvnews.com/en/resize/newbucket/730_-/2022/07/twitter-down-1657803458.jpg", "https://images.ctfassets.net/lzny33ho1g45/31LQCTwB9gQtEjizR50oCM/878004a035100907498b855a5aa4ae0e/bd44bd4465e645dd5f1a2e6e97fea021.png?w=1400", "https://www.letseatcake.com/wp-content/uploads/2022/11/End-of-Twitter-Tweets-Memes-13.jpg", "https://assets.teenvogue.com/photos/615b48724796d962958e1582/1:1/w_1094,h_1094,c_limit/Screen%20Shot%202021-10-04%20at%202.22.36%20PM.png"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content === "?gifmeme") {
+  if(message.content === "a!gifmeme") {
     let replies = ["https://media2.giphy.com/media/koUtwnvA3TY7C/giphy.gif", "https://media.tenor.com/sQXkvagqfWYAAAAC/lol-funny-memes.gif", "https://media0.giphy.com/media/YWf50NNii3r4k/giphy.gif?cid=6c09b9527p0jq1i3baeuk3t6i2ldm9a5y6g0gipjqahlhzx9&rid=giphy.gif&ct=g", "https://media4.giphy.com/media/xTk9ZzD6NuYrMuDBx6/200w.gif", "https://media1.giphy.com/media/nn2kmb1lRtpkY/200w.gif", "https://media.giphy.com/media/yr7n0u3qzO9nG/giphy.gif"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content === "?dirtymeme") {
+  if(message.content === "a!dirtymeme") {
     let replies = ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsCPp-QE_GOLwFkNn_Av2WSyw0WMRaNzzghpcQW-E&s", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREH4pIhJjfpGQjPkx4S5N1NQvgyrlKdiD9YHnLz92L&s", "https://image.marriage.com/advice/wp-content/uploads/2020/10/29-Dirty-Sex-Memes-2.jpg", "https://i.chzbgr.com/full/9044270080/h558D6B92/packaged-goods-her-pulled-out-right-yup", "https://www.letseatcake.com/wp-content/uploads/2022/02/Dirty-Memes-23.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5nMDtEAfaxaD3LZgaXeJMclfTj9N2pExebtZmrw&s"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if(message.content === "?darkmeme") {
+  if(message.content === "a!darkmeme") {
     let replies = ["https://i.pinimg.com/736x/a3/43/a4/a343a43ad51ff282e3b20609328c964b.jpg", "https://i.pinimg.com/236x/d6/cb/00/d6cb008bc1291154467fd223ec8df556.jpg", "https://i.chzbgr.com/full/9094466304/h31E05859/person-going-90-mph-school-zone-and-pre-schoolers-are-crossing-street-this-is-where-fun-begins", "https://cdn.ebaumsworld.com/mediaFiles/picture/604025/86034992.jpg", "https://i.imgflip.com/563zyg.jpg"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
- if(message.content === "?wholesomememe") {
+ if(message.content === "a!wholesomememe") {
     let replies = ["https://www.boredpanda.com/blog/wp-content/uploads/2022/11/funny-wholesome-memes-1-63628e20497f9__700.jpg", "https://www.rd.com/wp-content/uploads/2022/01/When-you%E2%80%99re-waiting-for-your-bestie-and-finally-see-them-640357669.jpg?fit=700,700", "https://www.rd.com/wp-content/uploads/2022/01/In-case-no-one-told-you-yet-today-you%E2%80%99re-doing-great-931446400.jpg?fit=700,700", "https://global-uploads.webflow.com/5f6cc9cd16d59d990c8fca33/639767fabfd0c945ef926c56_wholesome-memes-4.jpg", "https://global-uploads.webflow.com/5f6cc9cd16d59d990c8fca33/63976dfc2fe48b2ad1071e3b_wholesome-memes-7.jpg"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if (message.content === "?ping") {
+  if (message.content === "a!ping") {
  let embed = new Discord.MessageEmbed()
  .setTitle("🏓 Pong!")
  .setDescription(`**${client.ws.ping}ms** Latency!`)
@@ -347,30 +347,33 @@ if(message.content.startsWith("?slap")) {
  );
  message.reply({embeds: [embed]})
  }
-  if(message.content === "?dumbestcommandever") {
+  if(message.content === "a!dumbestcommandever") {
     message.react("🤪");
   }
-  if (message.content === "?rockpaperscissors" || message.content === "?rps" || message.content === "?RPS") {
- message.reply("<:atlanteanx:1111021057688739950> | PICK AN OBJECT TO PLAY RPS WITH! EXAMPLE: ****?rps rock**** | <:atlanteanx:1111021057688739950>")
+  if (message.content === "a!rockpaperscissors" || message.content === "a!rps" || message.content === "a!RPS") {
+ message.reply("<:atlanteanx:1111021057688739950> | PICK AN OBJECT TO PLAY RPS WITH! EXAMPLE: ****a!rps rock**** | <:atlanteanx:1111021057688739950>")
  }
 
- if (message.content === "?rps rock" || message.content === "?Rps rock" || message.content === "?RPS ROCK") {
+ if (message.content === "a!rps rock" || message.content === "a!Rps rock" || message.content === "a!RPS ROCK") {
  let replies = ["YOU CHOSE ***ROCK*** :rock:, I CHOSE ***PAPER*** :newspaper:. :tada: ****PAPER**** WINS! :tada:", "YOU CHOSE ***ROCK*** :rock:, I CHOSE ***SCISSORS*** :scissors:. :tada: ****ROCK**** WINS! :tada:", "YOU CHOSE ***ROCK*** :rock:, I CHOSE ***ROCK*** :rock:. <:atlanteanx:1111021057688739950> IT'S A TIE! <:atlanteanx:1111021057688739950>"]
  message.channel.send(replies[Math.floor(Math.random() * replies.length)])
  }
 
- if (message.content === "?rps paper" || message.content === "?Rps paper" || message.content === "?RPS PAPER") {
+ if (message.content === "a!rps paper" || message.content === "a!Rps paper" || message.content === "a!RPS PAPER") {
  let replies = ["YOU CHOSE ***PAPER*** :newspaper:, I CHOSE ***ROCK*** :rock:. :tada: ****PAPER**** WINS! :tada:", "YOU CHOSE ***PAPER*** :newspaper:, I CHOSE ***SCISSORS*** :scissors:. :tada: ****SCISSORS**** WIN! :tada:", "YOU CHOSE ***PAPER*** :newspaper:, I CHOSE ***PAPER*** :newspaper:. <:atlanteanx:1111021057688739950> IT'S A TIE! <:atlanteanx:1111021057688739950>"]
  message.channel.send(replies[Math.floor(Math.random() * replies.length)])
  }
 
- if (message.content === "?rps scissors" || message.content === "?Rps scissors" || message.content === "?RPS SCISSORS") {
+ if (message.content === "a!rps scissors" || message.content === "a!Rps scissors" || message.content === "a!RPS SCISSORS") {
  let replies = ["YOU CHOSE ***SCISSORS*** :scissors:, I CHOSE ***ROCK*** :rock:. :tada: ****ROCK**** WINS! :tada:", "YOU CHOSE ***SCISSORS*** :scissors:, I CHOSE ***PAPER*** :newspaper:. :tada: ****SCISSORS**** WIN! :tada", "YOU CHOSE ***SCISSORS*** :scissors:, I CHOSE ***SCISSORS*** :scissors:. <:atlanteanx:1111021057688739950> IT'S A TIE! <:atlanteanx:1111021057688739950>"]
  message.channel.send(replies[Math.floor(Math.random() * replies.length)])
  }
+  if(message.content === "'<@1103495842633089074>'") {
+message.reply(`Hello! I'm so glad to be in ${message.guild.name}! To get started please type a!bored`) 
+}
 })
 client.on("message", async message => {
-  if(message.content === "?buylambo") {
+  if(message.content === "a!buylambo") {
      let lambo = 6000
     let currentBalance = await db.get(`wallet_${message.author.id}`)
     if(`wallet_${message.author.id}`, currentBalance > lambo) {
@@ -382,7 +385,7 @@ client.on("message", async message => {
     .setImage("https://hips.hearstapps.com/hmg-prod/images/2022-lamborghini-aventador-109-1625607587.jpg?crop=0.691xw:0.776xh;0.204xw,0.180xh&resize=640:*")
      message.reply({embeds: [embed]})
   } 
-  if(message.content === "?buysword") {
+  if(message.content === "a!buysword") {
      let sword = 4000
     let currentBalance = await db.get(`wallet_${message.author.id}`)
     if(`wallet_${message.author.id}`, currentBalance > sword) {
@@ -394,7 +397,7 @@ client.on("message", async message => {
     .setImage("https://www.darksword-armory.com/wp-content/uploads/2014/09/Medieval-knight-sword.jpg")
      message.reply({embeds: [embed]})
   }
-    if(message.content === "?buyknife") {
+    if(message.content === "a!buyknife") {
      let knife = 500
     let currentBalance = await db.get(`wallet_${message.author.id}`)
     if(`wallet_${message.author.id}`, currentBalance > knife) {
@@ -406,7 +409,7 @@ client.on("message", async message => {
     .setImage("https://images.thdstatic.com/productImages/8bb22b32-9328-478a-9aac-3085782c0a24/svn/klein-tools-pocket-knives-44228r-64_1000.jpg")
      message.reply({embeds: [embed]})
   }
-    if(message.content === "?buyglock19") {
+    if(message.content === "a!buyglock19") {
      let glock = 1500
     let currentBalance = await db.get(`wallet_${message.author.id}`)
     if(`wallet_${message.author.id}`, currentBalance > glock) {
@@ -418,7 +421,7 @@ client.on("message", async message => {
     .setImage("https://us.glock.com/-/media/Global/US/old/US-Site/70-Pistols/hero-all-assets/hero-img-1-1-feature-sm.ashx")
      message.reply({embeds: [embed]})
   }
-    if(message.content === "?buyak47") {
+    if(message.content === "a!buyak47") {
      let ak47 = 3000
       let invBalance = await db.get(`inventory_${message.author.id}`)
     let currentBalance = await db.get(`wallet_${message.author.id}`)
@@ -432,23 +435,23 @@ client.on("message", async message => {
     .setImage("https://cdn.shopify.com/s/files/1/1980/1771/products/AKBlacktoymodelbyrope_grande.jpg?v=1681406751")
      message.reply({embeds: [embed]})
   }
-  if(message.content.toLowerCase().startsWith("?dep")) {
+  if(message.content.toLowerCase().startsWith("a!dep")) {
        let amount = message.content.split(" ").slice(1)
     let currentBalance = await db.get(`bank_${message.author.id}`)
-    if(!amount[0]) return message.reply("`?dep (amount)`")
+    if(!amount[0]) return message.reply("`a!dep (amount)`")
     if(`wallet_${message.author.id}`, currentBalance > amount) {
      await db.set(`bank_${message.author.id}`, currentBalance + amount).then(message.reply(`Deposited $${amount} to your bank.`)) }
     if(`wallet_${message.author.id}`, currentBalance < amount) return message.reply("You don't have enough!")
   }
- if(message.content.toLowerCase().startsWith("?withdraw")) {
+ if(message.content.toLowerCase().startsWith("a!withdraw")) {
        let amount = message.content.split(" ").slice(1)
     let currentBalance = await db.get(`bank_${message.author.id}`)
-    if(!amount[0]) return message.reply("`?withdraw (amount)`")
+    if(!amount[0]) return message.reply("`a!withdraw (amount)`")
     if(`bank_${message.author.id}`, currentBalance > amount) {
      await db.set(`wallet_${message.author.id}`, currentBalance + amount).then(message.reply(`Withdrew $${amount} from your bank to your wallet.`)) }
     if(`bank_${message.author.id}`, currentBalance < amount) return message.reply("You don't have enough!")
   }
-      if(message.content.toLowerCase().startsWith("?inventory")) {
+      if(message.content.toLowerCase().startsWith("a!inventory")) {
   let inv = await db.get(`inventory_${message.author.id}`)
 
   if(inv === null) balance = 0
@@ -459,15 +462,15 @@ client.on("message", async message => {
   .setThumbnail(message.author.displayAvatarURL({dynamic: true}))
     message.reply({embeds: [invEmbed]})
   }
-  if(message.content === "?shop") {
+  if(message.content === "a!shop") {
     let shop = new Discord.MessageEmbed()
     .setTitle("Shop and Prices")
     .addField("All Items", " ")
-    .addField(" ", "?buylambo - $6000")
-    .addField(" ", "?buysword - $4000")
-    .addField(" ", "?buyknife - $500")
-    .addField(" ", "?buyglock19 - $1500")
-    .addField(" ", "?buyak47 - $3000")
+    .addField(" ", "a!buylambo - $6000")
+    .addField(" ", "a!buysword - $4000")
+    .addField(" ", "a!buyknife - $500")
+    .addField(" ", "a!buyglock19 - $1500")
+    .addField(" ", "a!buyak47 - $3000")
     .setColor("RANDOM")
     message.reply({embeds: [shop]})
   }
@@ -476,7 +479,7 @@ client.on("message", async message => {
   if(message.content === "ping") {
     message.reply("Pong!")
   }
-  if(message.content.toLowerCase().startsWith("?balance") || message.content.toLowerCase().startsWith("?bal")) {
+  if(message.content.toLowerCase().startsWith("a!balance") || message.content.toLowerCase().startsWith("a!bal")) {
   let balance = await db.get(`wallet_${message.author.id}`)
   let bank = await db.get(`bank_${message.author.id}`)
 
@@ -490,7 +493,7 @@ client.on("message", async message => {
   .setThumbnail(message.author.displayAvatarURL({dynamic: true}))
     message.reply({embeds: [moneyEmbed]})
   }
-  if(message.content.toLowerCase().startsWith("?dailyprize")) {
+  if(message.content.toLowerCase().startsWith("a!dailyprize")) {
     const check = await db.get(`dailyCheck_${message.author.id}`)
     const timeout = 86400000;
     if(check !== null && timeout - (Date.now() - check) > 0) {
@@ -509,17 +512,17 @@ client.on("message", async message => {
 })
 client.on("message", message => {
   const args = message.content.split(" ").slice(1)
-  if(message.content === "?policy") {
+  if(message.content === "a!policy") {
     let embed = new Discord.MessageEmbed()
       .setTitle("Atlantean Privacy Policy")
-      .setDescription("1. By using Atlantean, you accept that your messages will be read by the bot, channels and servers will be accesed etc. \n2. Atlantean takes your data by creating a database with your in-bot wallet, bank, and inventory.")
+      .setDescription("https://atlantean-bot.gleyberdaywithmangos25.repl.co/policy.html")
       .setColor("RANDOM")
     message.reply({embeds: [embed]})
   }
-    if(message.content.startsWith("?purge")) {
+    if(message.content.startsWith("a!purge")) {
   if(!message.member.permissions.has("MANAGE_MESSAGES")) return message.reply("You don't have permission!")
     let amountToPurge = args[0]
-    if(isNaN(amountToPurge)) return message.reply("`?purge (Number)`")
+    if(isNaN(amountToPurge)) return message.reply("`a!purge (Number)`")
     message.delete()
     message.channel.bulkDelete(amountToPurge)
     message.channel.send(`Deleted ${amountToPurge} messages!`).then(v => v.delete({timeout: 10000}))
@@ -527,10 +530,10 @@ client.on("message", message => {
       message.reply("<:atlanteanx:1111021057688739950> | Due to Discord API I cannot delete messages older than 14 days.")
       })
   }
-  if(message.content.startsWith("?kick")) {
+  if(message.content.startsWith("a!kick")) {
     if(message.member.permissions.has("KICK_MEMBERS")) {
       let member = message.mentions.members.first()
- if(!args[0]) return message.reply("`?kick @user (reason)`")
+ if(!args[0]) return message.reply("`a!kick @user (reason)`")
       else {
         member.kick().then(mem => {
           message.channel.send(`Kicked ${mem.user.username}!`)
@@ -540,10 +543,10 @@ client.on("message", message => {
       message.reply("You don't have permission to do that.")
     }
   }
-    if(message.content.startsWith("?ban")) {
+    if(message.content.startsWith("a!ban")) {
     if(message.member.permissions.has("BAN_MEMBERS")) {
       let member = message.mentions.members.first()
- if(!args[0]) return message.reply("`?ban @user (reason)`")
+ if(!args[0]) return message.reply("`a!ban @user (reason)`")
       else {
         member.ban().then(mem => {
          let embed = new Discord.MessageEmbed()
@@ -559,32 +562,13 @@ client.on("message", message => {
       message.reply("You don't have permission to do that.")
     }
   }
-if(message.content.startsWith("?unban")) {
+if(message.content.startsWith("a!unban")) {
 if(message.member.permissions.has("BAN_MEMBERS")) {
 let args = message.content.split(" ").slice(1)
-if(!args[0]) return message.reply("`?unban (userid) (reason)`")
+if(!args[0]) return message.reply("`a!unban (userid) (reason)`")
 if(isNaN(args[0])) return message.reply("Please provide a real id!")
 } else {
   message.reply("You don't have permission!")
-}
-}
-  if(message.content.startsWith("?warn")) {
- if(message.member.permissions.has("MANAGE_MESSAGES")) {
- let args = message.content.split(" ").slice(1)
- let victim = message.mentions.users.first()
- if(!args[0]) return message.reply("`?warn @user (reason)`")
- 
- let embed = new Discord.MessageEmbed()
- .setTitle("Warned")
- .setDescription(args.join(" "))
- .setThumbnail('https://cdn.discordapp.com/attachments/1102697856005058622/1102750626775060540/Screenshot_2023-04-23_5.13.58_PM.png')
- .setColor("PURPLE")
- .setFooter(`Moderator: ${message.author.username}`)
- .setTimestamp()
- message.channel.send({embeds: [embed]})
-
-} else {
- message.reply("You don't have permission to do that!")
 }
 }
 });
@@ -592,12 +576,12 @@ client.on("message", message => {
   if(message.content === "pingy") {
     message.reply("Pongy!")
   }
-  if(message.content.startsWith("?mute")) {
+  if(message.content.startsWith("a!mute")) {
     if(!message.member.permissions.has("KICK_MEMBERS")) return message.reply("You don't have permission!")
     let role = message.guild.roles.cache.find(role => role.name === "muted")
     let member = message.mentions.members.first()
     let reason = message.content.split(" ").slice(2).join(" ")
-    if(!reason) return message.reply("`?mute @user (reason)`")
+    if(!reason) return message.reply("`a!mute @user (reason)`")
     if(!role) return message.reply("You don't have a muted role!")
  if(!member) return message.reply("You didn't specify a member!")
     if(member.roles.cache.has(role.id)) return message.channel.send("That user is already muted!")
@@ -609,12 +593,12 @@ client.on("message", message => {
       message.reply("Oops, Something went wrong.")
     })
   }
-  if(message.content.startsWith("?unmute")) {
+  if(message.content.startsWith("a!unmute")) {
     if(!message.member.permissions.has("KICK_MEMBERS")) return message.reply("You don't have permission")
     let role = message.guild.roles.cache.find(role => role.name === "muted")
     let member = message.mentions.members.first()
     let reason = message.content.split(" ").slice(2).join(" ")
-    if(!reason) return message.reply("`?unmute @user (reason)`")
+    if(!reason) return message.reply("`a!unmute @user (reason)`")
     if(!role) return message.reply("You don't have a muted role!")
  if(!member) return message.reply("You didnt specify a member!")
     if(!member.roles.cache.has(role.id)) return message.reply("That user not muted!")
@@ -632,7 +616,7 @@ client.on("messageDelete", deletedMsg => {
  client.snipe.set(deletedMsg.channel.id, deletedMsg)
 })
 client.on("message", message => {
-if(message.content.startsWith("?snipe")) {
+if(message.content.startsWith("a!snipe")) {
  let channel = message.mentions.channels.first() || message.channel
  let msg = client.snipe.get(channel.id)
  if(!msg) return message.reply("There is nothing to snipe!")
@@ -646,16 +630,16 @@ if(message.content.startsWith("?snipe")) {
 }
 })
 client.on("message", message => {
-  if(message.content === "?setupverification") {
+  if(message.content === "a!setupverification") {
     let embed = new Discord.MessageEmbed()
     .setTitle("How to setup verification with Atlantean!")
     .addField("Step 1", "Create a role with the name `Verified`. ")
     .addField("Step 2", "Setup permissions for this role.")
-    .addField("Step 3", "Create a verification channel telling them to type `?verify`.")
+    .addField("Step 3", "Create a verification channel and type a message that includes the following: `To gain access to our channels you must verify by clicking the check mark below.` and anything you want after or before, ex: `Welcome to the best server ever! To gain access to our channels you must verify by clicking the check mark below. Step 1: Read Rules Step 2: Verify.`")
     .addField("Additional Note (Important)", "For the verification channel, make it viewable by everyone and allow everyone to send messages, then, add the `Verified` role and remove the permission to view the channel for the `Verified` role.")
     message.reply({embeds: [embed]})
   }
-   if(message.content.startsWith("?duplicatechannel")) {
+   if(message.content.startsWith("a!duplicatechannel")) {
 if(!message.member.permissions.has("MANAGE_CHANNELS")) {
 return message.channel.send("You don't have permission.")
 }
@@ -665,12 +649,12 @@ message.channel.clone({position: message.channel.rawPosition }).then(ch => { ch.
  .split(" ")
  .slice(1);
 }
-  if(message.content === "?botinfo") {
+  if(message.content === "a!botinfo") {
     let info = new Discord.MessageEmbed()
     .setAuthor("Atlantean Bot", "https://i.postimg.cc/V6MnBXnk/Screenshot-2023-05-03-9-41-29-PM.png")
     .addField("General Info", "Developer - `mangos#0600`", true)
     .addField("Server Count", `${client.guilds.cache.size.toLocaleString()}`, true)
-    .addField("Get started with", "?bored, ?Bored, ?BORED")
+    .addField("Get started with", "a!bored, a!Bored, a!BORED")
     .addField("Other", `**${client.ws.ping}ms** Latency.`)
     .addField("Hosted on Replit", "Running 24/7 with UptimeRobot")
     .addField("6 files", "Main file - 800+ lines of code", true)
@@ -679,7 +663,7 @@ message.channel.clone({position: message.channel.rawPosition }).then(ch => { ch.
     .setColor("RANDOM")
     message.reply({embeds: [info]})
   }
-if (message.content.startsWith("?suggest")) {
+if (message.content.startsWith("a!suggest")) {
  let args = message.content
  .split(" ")
  .slice(1)
@@ -695,14 +679,14 @@ client.channels.cache.get('1105225382090788946').send({embeds: [reportlog]}).the
  })
  message.reply("Your Suggestion has been succesfully been sent. ✅") 
 }
-if(message.content.startsWith("?hug")) {
+if(message.content.startsWith("a!hug")) {
  let l = message.mentions.users.first()
  if(!l) message.reply("Please Mention someone to hug.")
  else {
  message.channel.send(`${l} was hugged!`)
  }
 }
-   if(message.content.startsWith("?renamechannel")) {
+   if(message.content.startsWith("a!renamechannel")) {
 if(!message.member.permissions.has("MANAGE_CHANNELS")) {
 return message.reply("You don't have permission.")
 }
@@ -711,12 +695,12 @@ if(!args[0]) return message.reply("Choose a name!")
  message.channel.setName(args.join(" "))
      message.channel.send("Renamed Channel. :white_check_mark: Note: If this channel's name was changed twice by Atlantean already the command will not work.")
 }
-  if(message.content.startsWith("?userinfo")) {
+  if(message.content.startsWith("a!userinfo")) {
  let user = message.mentions.users.first();
  let member =
 message.mentions.members.first() || message.member;
     if(!member) return message.reply("Mention a user!")
-    if(!user) return message.reply("`?userinfo @user`")
+    if(!user) return message.reply("`a!userinfo @user`")
  let embed = new
  Discord.MessageEmbed()
  .setColor("BLURPLE")
@@ -726,11 +710,11 @@ message.mentions.members.first() || message.member;
  .setFooter(`Requested by ${message.author.username}`)
  message.channel.send({embeds: [embed]})
 }
-  if(message.content === "?flipacoin") {
+  if(message.content === "a!flipacoin") {
     let replies = [":coin: Heads! :coin:", ":coin: Tails! :coin:"]
  message.reply(replies[Math.floor(Math.random() * replies.length)])
   }
-  if (message.content.startsWith("?feedback")) {
+  if (message.content.startsWith("a!feedback")) {
  let args = message.content
  .split(" ")
  .slice(1)
@@ -745,69 +729,115 @@ client.channels.cache.get('1105225382090788946').send({embeds: [reportlog]}).the
  sentMessage.react("✅")
  })
 }
-  if(message.content.toLowerCase() === "?verify") {
-let verify = new Discord.MessageEmbed()
-  .setTitle(`:wave: Welcome to ${message.guild.name}!`)
-  .setDescription("To gain access to the server must pass the verification.")
-  .addField("How to Verify", "Click on the :white_check_mark: to verify.") 
-.setColor("PURPLE")
-message.channel.send({embeds: [verify]}).then(sentMessage => {
-  sentMessage.react("✅")
 })
+client.on("message",   async message => {
+  if(message.content.startsWith("a!setwelcomechannel")) {
+    let channel = message.mentions.channels.first()
+    message.reply(`${channel} has been set as the welcome channel!`)
+    await db.set(`channel_${message.member.guild}`)
+  }
+  })
+client.on("message", async message => {
+    if(message.content.toLowerCase().startsWith("a!warn")) {
+ if(message.member.permissions.has("MANAGE_MESSAGES")) {
+ let args = message.content.split(" ").slice(1)
+   let victim = message.mentions.users.first()
+   let warning = 1
+   let warnings = await db.get(`warnings_${victim}`)
+ if(!args[0]) return message.reply("`a!warn @user (reason)`")
+ 
+ let embed = new Discord.MessageEmbed()
+ .setTitle("Warned")
+ .setDescription(`${args}`)
+ .setThumbnail('https://cdn.discordapp.com/attachments/1102697856005058622/1102750626775060540/Screenshot_2023-04-23_5.13.58_PM.png')
+ .setColor("PURPLE")
+ .setFooter(`Moderator: ${message.author.username}`)
+ .setTimestamp()
+ message.channel.send({embeds: [embed]})
+   await db.set(`warnings_${victim}`, warnings + warning)
 
-const filter = (reaction, user) => {
- return ['✅'].includes(reaction.emoji.name) && user.id === message.author.id;
-};
+} else {
+ message.reply("You don't have permission to do that!")
+}
+}
+  if(message.content.startsWith("a!showwarns")) {
+    let args = message.mentions.users.first()
+    if(!args) return message.reply("Choose a member!")
+    let warnings = await db.get(`warnings_${args}`)
+    if(warnings === null) warnings = 0
+    let warningembed = new Discord.MessageEmbed()
+  .setTitle(`${args}'s Warnings`)
+  .setDescription(`${warnings}`)
+  .setColor("RANDOM")
+  .setThumbnail(args.displayAvatarURL({dynamic: true}))
+    message.reply({embeds: [warningembed]})
+  }
+      if(message.content.toLowerCase().startsWith("a!clearwarns")) {
+ if(message.member.permissions.has("MANAGE_MESSAGES")) {
+ let goofy = message.content.split(" ").slice(1)
+   let victim = message.mentions.users.first()
+   let warnings = await db.get(`warnings_${victim}`)
+ if(!goofy[0]) return message.reply("`a!clearwarns @user`")
+ 
+ let embed = new Discord.MessageEmbed()
+ .setTitle("Warned")
+ .setDescription(`${victim} has been cleared of ${goofy} warnings.`)
+ .setThumbnail('https://cdn.discordapp.com/attachments/1102697856005058622/1102750626775060540/Screenshot_2023-04-23_5.13.58_PM.png')
+ .setColor("PURPLE")
+ .setFooter(`Moderator: ${message.author.username}`)
+ .setTimestamp()
+ message.channel.send({embeds: [embed]})
+   await db.set(`warnings_${victim}`, warnings - goofy)
 
-message.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
- .then(collected => {
- const reaction = collected.first();
- if(reaction.emoji.name === '✅') {
-   let role = message.guild.roles.cache.find(role => role.name === "Verified")
- message.member.roles.add(role)
+} else {
+ message.reply("You don't have permission to do that!")
+}
+}
+  if(message.content.startsWith("a!say")) {
+    message.delete()
+    let args = message.content.split(" ").slice(1)
+    let toSay = args.join(" ")
+  if(!toSay) return message.reply("What should I say?")
+  message.channel.send(`${toSay}`)
+}
+})
+client.on('messageCreate', async (message) => {
+    if (message.content.includes("To gain access to our channels you must verify by clicking the check mark below.")) {
+        message.react('✅');
+        const filter = (reaction, user) => reaction.emoji.name === '✅' && user.id === message.author.id;
+       let role = message.guild.roles.cache.find(role => role.name === "Verified")
+        const collector = message.createReactionCollector({ filter, time: 15_000 });
+        collector.on('collect', r => message.member.roles.add(role));
+    }
+  if(message.content.startsWith("a!newrole")) {
+    let args = message.content.split(" ").slice(1)
+    message.guild.roles.create(args)
+    message.channel.send("Created a new role for you!")
+  }
+});
+
+
+client.api.applications(`1103495842633089074`).commands.post({
+ data: {
+ name: "help",
+ description: "Get started with the Atlantean Bot!"
+ }
+ });
+
+ client.ws.on('INTERACTION_CREATE', async interaction => {
+ const command = interaction.data.name.toLowerCase();
+ const args = interaction.data.options;
+ if (command === 'help'){ 
+ client.api.interactions(interaction.id, interaction.token).callback.post({
+ data: {
+ type: 4,
+ data: {
+ content: "Issues? Please join the support server! https://discord.gg/UwRb96dxFU | `Use a!bored for all commands!`"
+ }
  }
  })
- .catch(collected => {
- message.reply('error');
+ }
  });
-} 
-})
-client.on("message", async message => {
-    if(message.content === "?help") {
-    const row = new MessageActionRow()
-			.addComponents(
-				new MessageSelectMenu()
-					.setCustomId('select')
-					.setPlaceholder('Choose Category!')
-					.setMinValues(1)
-					.setMaxValues(1)
-					.addOptions([
-						{
-							label: 'Select me',
-							description: 'This is a description',
-							value: 'first_option',
-						},
-						{
-							label: 'Moderation',
-							description: 'Moderation Commands',
-							value: 'second_option',
-              customId: 'cool'
-						},
-						{
-							label: 'I am also an option',
-							description: 'This is a description as well',
-							value: 'third_option',
-						},
-					]),
-			);
-    message.reply({content: "Hello", components: [row]});
-    let moderation = new Discord.MessageEmbed()
-    .setTitle("WORKING")
-    if(message.customId === 'cool') {
-      await message.channel.send({embeds: [moderation]})
-    }
-  }
-})
 
 
 
@@ -816,7 +846,7 @@ client.on("message", async message => {
 client.on("ready", async () => {
   console.log(`${client.user.tag} is online!`)
  function randomStatus() {
- let status = [`?bored • ${client.guilds.cache.size.toLocaleString()} Servers`, `/help • ${client.guilds.cache.size.toLocaleString()} Servers`, `https://bit.ly/atlanteanbot`]
+ let status = [`a!bored • ${client.guilds.cache.size.toLocaleString()} Servers`, `/help • ${client.guilds.cache.size.toLocaleString()} Servers`, `https://bit.ly/atlanteanbot`]
  let rstatus = Math.floor(Math.random() * status.length);
  client.user.setActivity(status[rstatus], {type: "LISTENING"}, {status: "DND"})
  }; setInterval(randomStatus, 5000) 
